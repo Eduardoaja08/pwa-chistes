@@ -15,20 +15,23 @@
  * conoce como número menor y se cambia cuando se realizan
  * modificaciones menores.
  */
-const VERSION = "3.00"
+const VERSION = "1.00"
 
-/** Nombre del archivo de cache. */
-const CACHE = "ejemploPWA"
+/**
+ * Nombre de la carpeta de caché.
+ */
+const CACHE = "pwamd"
 
 /**
  * Archivos requeridos para que la aplicación funcione fuera de
  * línea.
  */
 const ARCHIVOS = [
- "favicon.ico",
+ "ayuda.html",
  "index.html",
- "site.webmanifest",
  "css/estilos.css",
+ "css/tokens.css",
+ "img/Escultura_de_coyote.jpeg",
  "img/icono2048.png",
  "img/maskable_icon.png",
  "img/maskable_icon_x128.png",
@@ -38,12 +41,71 @@ const ARCHIVOS = [
  "img/maskable_icon_x512.png",
  "img/maskable_icon_x72.png",
  "img/maskable_icon_x96.png",
+ "img/pexels-craig-dennis-3701822.jpg",
+ "img/pexels-creative-workshop-3978352.jpg",
+ "img/pexels-erik-karits-3732453.jpg",
+ "img/pexels-esteban-arango-10226903.jpg",
+ "img/pexels-moises-patrício-10961948.jpg",
+ "img/pexels-ralph-2270848.jpg",
+ "img/pexels-rasmus-svinding-35435.jpg",
+ "img/pexels-steve-397857.jpg",
+ "img/pexels-vadim-b-141496.jpg",
  "img/screenshot_horizontal.png",
  "img/screenshot_vertical.png",
  "js/configura.js",
+ "js/nav-bar.js",
+ "js/nav-drw.js",
+ "js/nav-tab-fixed.js",
+ "js/nav-tab-scrollable.js",
+ "lib/css/colors.module.css",
+ "lib/css/elevation.css",
+ "lib/css/material-symbols-outlined.css",
+ "lib/css/md-cards.css",
+ "lib/css/md-fab-primary.css",
+ "lib/css/md-filled-button.css",
+ "lib/css/md-filled-text-field.css",
+ "lib/css/md-list.css",
+ "lib/css/md-menu.css",
+ "lib/css/md-navigation-bar.css",
+ "lib/css/md-outline-button.css",
+ "lib/css/md-ripple.css",
+ "lib/css/md-segmented-button.css",
+ "lib/css/md-slider-field.css",
+ "lib/css/md-standard-icon-button.css",
+ "lib/css/md-switch.css",
+ "lib/css/md-tab.css",
+ "lib/css/md-top-app-bar.css",
+ "lib/css/motion.css",
+ "lib/css/roboto.css",
+ "lib/css/shape.css",
+ "lib/css/state.css",
+ "lib/css/theme.dark.css",
+ "lib/css/theme.light.css",
+ "lib/css/typography.css",
+ "lib/fonts/MaterialSymbolsOutlined[FILL,GRAD,opsz,wght].codepoints",
+ "lib/fonts/MaterialSymbolsOutlined[FILL,GRAD,opsz,wght].ttf",
+ "lib/fonts/MaterialSymbolsOutlined[FILL,GRAD,opsz,wght].woff2",
+ "lib/fonts/roboto-v32-latin-regular.woff2",
+ "lib/js/abreElementoHtml.js",
+ "lib/js/cierraElementoHtmo.js",
+ "lib/js/getAttribute.js",
+ "lib/js/htmlentities.js",
  "lib/js/muestraError.js",
+ "lib/js/muestraTextoDeAyuda.js",
  "lib/js/ProblemDetails.js",
- "lib/js/registraServiceWorkerSiEsSoportado.js"
+ "lib/js/querySelector.js",
+ "lib/js/registraServiceWorkerSiEsSoportado.js",
+ "lib/js/resaltaSiEstasEn.js",
+ "lib/js/const/ES_APPLE.js",
+ "lib/js/custom/md-menu-button.js",
+ "lib/js/custom/md-options-menu.js",
+ "lib/js/custom/md-overflow-button.js",
+ "lib/js/custom/md-overflow-menu.js",
+ "lib/js/custom/md-select-menu.js",
+ "lib/js/custom/md-slider-field.js",
+ "lib/js/custom/md-top-app-bar.js",
+ "lib/js/custom/MdNavigationDrawer.js",
+ "ungap/custom-elements.js",
 ]
 
 // Verifica si el código corre dentro de un service worker.
@@ -68,21 +130,19 @@ if (self instanceof ServiceWorkerGlobalScope) {
 }
 
 async function llenaElCache() {
-  console.log("Intentando cargar caché:", CACHE);
-  const keys = await caches.keys();
-  for (const key of keys) {
-    await caches.delete(key);
-  }
-  const cache = await caches.open(CACHE);
-  try {
-    await cache.addAll(ARCHIVOS);
-    console.log("Cache cargado:", CACHE);
-  } catch (error) {
-    console.error("Error al cargar el caché:", error);
-  }
-  console.log("Versión:", VERSION);
+ console.log("Intentando cargar caché:", CACHE)
+ // Borra todos los cachés.
+ const keys = await caches.keys()
+ for (const key of keys) {
+  await caches.delete(key)
+ }
+ // Abre el caché de este service worker.
+ const cache = await caches.open(CACHE)
+ // Carga el listado de ARCHIVOS.
+ await cache.addAll(ARCHIVOS)
+ console.log("Cache cargado:", CACHE)
+ console.log("Versión:", VERSION)
 }
-
 
 /** @param {FetchEvent} evt */
 async function buscaLaRespuestaEnElCache(evt) {
