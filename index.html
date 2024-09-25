@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width">
+
+ <title>Equipo MegaDev</title>
+
+ <!-- Resumen para los motores de búsqueda. -->
+ <meta name="description" content="MegaDev">
+
+ <!-- Color de la barra de navegación de Chrome en
+  dispositivos móviles. -->
+ <meta name="theme-color" content="#cbc693">
+
+ <!-- Ícono para la página web, que normalmente se
+  pone en la raíz del sitio.
+  Puede ser diferente para cada página. -->
+ <link rel="icon" sizes="32x32" href="favicon.ico">
+
+ <!-- Configuración de la PWA para Chrome y Edge.
+  Debe ponerse en todas las páginas. -->
+ <link rel="manifest" href="site.webmanifest">
+
+ <link rel="stylesheet" href="css/estilos.css">
+
+ <script type="module" src="js/configura.js"></script>
+ 
+ 
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Selecciona un nombre para escuchar un chiste</h2>
+        <label for="nombres">Nombres:</label>
+        <select id="nombres">
+            <option value="">--Selecciona un nombre--</option>
+            <option value="Juan">Juan</option>
+            <option value="Ana">Ana</option>
+            <option value="Carlos">Carlos</option>
+            <option value="Lucía">Lucía</option>
+            <option value="Pedro">Pedro</option>
+        </select>
+    </div>
+
+    <script>
+        const chistes = {
+            "Juan": "¿Qué hace una abeja en el gimnasio? ¡Zum-ba!",
+            "Ana": "¿Qué le dice una impresora a otra? ¿Esa hoja es tuya o es una impresión mía?",
+            "Carlos": "¿Por qué el libro de matemáticas está deprimido? Porque tiene muchos problemas.",
+            "Lucía": "¿Qué hace una vaca con los ojos cerrados? ¡Leche concentrada!",
+            "Pedro": "¿Cómo se despiden los químicos? Ácido un placer."
+        };
+
+        document.getElementById("nombres").addEventListener("change", function() {
+            const nombreSeleccionado = this.value;
+            if (nombreSeleccionado) {
+                alert(chistes[nombreSeleccionado]);
+            }
+        });
+    </script>
+
+</body>
+</html>
